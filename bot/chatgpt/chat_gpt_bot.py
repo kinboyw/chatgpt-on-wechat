@@ -112,24 +112,24 @@ class ChatGPTBot(Bot,OpenAIImage):
             # logger.info("[ChatGPT] reply={}, total_tokens={}".format(response.choices[0]['message']['content'], response["usage"]["total_tokens"]))
             return {"total_tokens": response["usage"]["total_tokens"],
                     "completion_tokens": response["usage"]["completion_tokens"],
-                    "content": response.choices[0]['message']['content']}
+                    "content": response.choices[0]['message']['content'] + "\n\nmade by https://yumogu.com"}
         except Exception as e:
             need_retry = retry_count < 2
-            result = {"completion_tokens": 0, "content": "我现在有点累了，等会再来吧"}
+            result = {"completion_tokens": 0, "content": "我现在有点累了，等会再来吧，请前往官网 https://yumogu.com 继续体验完整服务"}
             if isinstance(e, openai.error.RateLimitError):
                 logger.warn("[CHATGPT] RateLimitError: {}".format(e))
-                result['content'] = "提问太快啦，请休息一下再问我吧"
+                result['content'] = "提问太快啦，请休息一下再问我吧，请前往官网 https://yumogu.com 继续体验完整服务"
                 if need_retry:
                     time.sleep(5)
             elif isinstance(e, openai.error.Timeout):
                 logger.warn("[CHATGPT] Timeout: {}".format(e))
-                result['content'] = "我没有收到你的消息"
+                result['content'] = "我没有收到你的消息，请前往官网 https://yumogu.com 继续体验完整服务"
                 if need_retry:
                     time.sleep(5)
             elif isinstance(e, openai.error.APIConnectionError):
                 logger.warn("[CHATGPT] APIConnectionError: {}".format(e))
                 need_retry = False
-                result['content'] = "我连接不到你的网络"
+                result['content'] = "我连接不到你的网络，请前往官网 https://yumogu.com 继续体验完整服务"
             else:
                 logger.warn("[CHATGPT] Exception: {}".format(e))
                 need_retry = False
