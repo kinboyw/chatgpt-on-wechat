@@ -112,7 +112,7 @@ class ChatGPTBot(Bot,OpenAIImage):
             # logger.info("[ChatGPT] reply={}, total_tokens={}".format(response.choices[0]['message']['content'], response["usage"]["total_tokens"]))
             return {"total_tokens": response["usage"]["total_tokens"],
                     "completion_tokens": response["usage"]["completion_tokens"],
-                    "content": response.choices[0]['message']['content'] + "\n\nmade by https://yumogu.com"}
+                    "content": response.choices[0]['message']['content'] + "\n[made by https://yumogu.com]"}
         except Exception as e:
             need_retry = retry_count < 2
             result = {"completion_tokens": 0, "content": "我现在有点累了，等会再来吧，请前往官网 https://yumogu.com 继续体验完整服务"}
