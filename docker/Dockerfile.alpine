@@ -22,6 +22,8 @@ RUN apk add --no-cache \
     && cd ${BUILD_PREFIX} \
     && cp config-template.json ${BUILD_PREFIX}/config.json \
     && /usr/local/bin/python -m pip install --no-cache --upgrade pip \
+    && pip config set global.index-url 'https://pypi.tuna.tsinghua.edu.cn/simple' \
+    && pip config set install.trusted-host 'https://pypi.tuna.tsinghua.edu.cn' \
     && pip install --no-cache -r requirements.txt \
     && pip install --no-cache -r requirements-optional.txt \
     && apk del curl wget
