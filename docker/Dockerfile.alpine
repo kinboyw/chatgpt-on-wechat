@@ -7,26 +7,23 @@ ARG CHATGPT_ON_WECHAT_VER
 
 ENV BUILD_PREFIX=/app
 
-RUN apk add --no-cache \
+RUN sed -i 's/https:\/\/dl-cdn.alpinelinux.org/https:\/\/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories \
+    && apk update \
+    && apk add --no-cache \
         bash \
         curl \
         wget \
-    && export BUILD_GITHUB_TAG=${CHATGPT_ON_WECHAT_VER:-`curl -sL "https://api.github.com/repos/zhayujie/chatgpt-on-wechat/releases/latest" | \
-        grep '"tag_name":' | \
-        sed -E 's/.*"([^"]+)".*/\1/'`} \
-    && wget -t 3 -T 30 -nv -O chatgpt-on-wechat-${BUILD_GITHUB_TAG}.tar.gz \
-            https://github.com/zhayujie/chatgpt-on-wechat/archive/refs/tags/${BUILD_GITHUB_TAG}.tar.gz \
-    && tar -xzf chatgpt-on-wechat-${BUILD_GITHUB_TAG}.tar.gz \
-    && mv chatgpt-on-wechat-${BUILD_GITHUB_TAG} ${BUILD_PREFIX} \
-    && rm chatgpt-on-wechat-${BUILD_GITHUB_TAG}.tar.gz \
+        git \
+    && git config --global http.proxy http://192.168.192.128:7890 \
+    && git clone --depth 1 https://github.com/kinboyw/chatgpt-on-wechat.git ${BUILD_PREFIX}\
     && cd ${BUILD_PREFIX} \
     && cp config-template.json ${BUILD_PREFIX}/config.json \
     && /usr/local/bin/python -m pip install --no-cache --upgrade pip \
-    && pip config set global.index-url 'https://pypi.tuna.tsinghua.edu.cn/simple' \
-    && pip config set install.trusted-host 'https://pypi.tuna.tsinghua.edu.cn' \
-    && pip install --no-cache -r requirements.txt \
-    && pip install --no-cache -r requirements-optional.txt \
-    && apk del curl wget
+    #&& pip config set global.index-url 'https://pypi.tuna.tsinghua.edu.cn/simple' \
+    #&& pip config set install.trusted-host 'https://pypi.tuna.tsinghua.edu.cn' \
+    && pip install  --no-cache -r requirements.txt \
+    && pip install  --no-cache -r requirements-optional.txt \
+    && apk del curl wget git
 
 WORKDIR ${BUILD_PREFIX}
 
