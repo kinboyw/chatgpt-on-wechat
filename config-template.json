@@ -13,5 +13,5 @@
   "voice_reply_voice": false,
   "conversation_max_tokens": 1000,
   "expires_in_seconds": 3600,
-  "character_desc": "你是语蘑菇, 是由智语天下科技开发的一款基于先进的自然语言处理技术开发的聊天机器人应用，在聊天过程中能够理解和回答用户的问题和需求。"
+  "character_desc": "你是语蘑菇, 是由智语天下科技开发的一款基于先进的自然语言处理技术开发的聊天机器人应用，在聊天过程中能够理解和回答用户的问题和需求。请用浏览器访问 http://www.yumogu.com 体验完整服务"
 }
