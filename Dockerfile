@@ -1,3 +1,3 @@
-FROM kinboy/chatgpt-on-wechat:1.0.0
+FROM kinboy/chatgpt-on-wechat:1.0.1
 
 ENTRYPOINT ["/entrypoint.sh"]
