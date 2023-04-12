@@ -4,7 +4,7 @@
 #CHATGPT_ON_WECHAT_TAG=`curl -sL "https://api.github.com/repos/zhayujie/chatgpt-on-wechat/releases/latest" | \
 #     grep '"tag_name":' | \
 #     sed -E 's/.*"([^"]+)".*/\1/'`
-CHATGPT_ON_WECHAT_TAG=1.0.1
+CHATGPT_ON_WECHAT_TAG=1.0.2
 
 HTTP_PROXY=http://192.168.192.128:7890
 
@@ -15,6 +15,5 @@ docker build -f Dockerfile.alpine \
              -t kinboy/chatgpt-on-wechat .
 
 # tag image
-docker tag kinboy/chatgpt-on-wechat kinboy/chatgpt-on-wechat:alpine 
 docker tag kinboy/chatgpt-on-wechat kinboy/chatgpt-on-wechat:$CHATGPT_ON_WECHAT_TAG-alpine
            
